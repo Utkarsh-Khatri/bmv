@@ -11,8 +11,8 @@
             "driver": "MySQL",
             "name": "localhost",
             "database": "BMV",
-            "username": "admin",
-            "password": "Rosh@n09"
+            "username": "root",
+            "password": "9814766609@r"
         }
     ]
 }
