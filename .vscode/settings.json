@@ -6,13 +6,13 @@
                 "enableSsl": "Disabled"
             },
             "previewLimit": 50,
-            "server": "127.0.0.1",
+            "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
-            "name": "localhost",
-            "database": "BMV",
-            "username": "admin",
-            "password": "Rosh@n09"
+            "database": "bmv",
+            "username": "root",
+            "password": "98510MySQL",
+            "name": "localhost"
         }
     ]
 }
