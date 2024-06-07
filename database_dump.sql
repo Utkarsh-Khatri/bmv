@@ -1,1 +1,1 @@
-SELECT * from Venue_details;
+SELECT*from Venue_details;

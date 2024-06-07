@@ -9,10 +9,10 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
+            "name": "localhost",
             "database": "bmv",
-            "username": "root",
-            "password": "98510MySQL",
-            "name": "localhost"
+            "username": "admin",
+            "password": "98510MySQL"
         }
     ]
 }
