@@ -24,7 +24,7 @@
 </head>
 
 <body class="bg-gradient-to-r from-blue-500 to-indigo-500">
-  <form action="{% url 'signup' %}" method="POST">
+  <form method="POST">
     {% csrf_token %}
     <section class="h-screen flex justify-center items-center">
       <div class="container mx-auto px-4">
@@ -33,36 +33,20 @@
             <div class="bg-white rounded-lg shadow-lg">
               <div class="p-8 text-center">
                 <div class="mb-6">
-                  <h2 class="text-2xl font-bold text-gray-800 mb-2">Sign Up</h2>
+                  <h2 class="text-2xl font-bold text-gray-800 mb-2">Login</h2>
                   <p class="text-gray-600 mb-4">Please enter the following details</p>
 
-                  <div class="mb-4">
-                    <input type="text" name="cust_name" id="cust_name" class="form-input w-full p-3 border border-gray-300 rounded" placeholder="Name" required>
-                  </div>
+           
 
                   <div class="mb-4">
                     <input type="email" name="cust_email" id="cust_email" class="form-input w-full p-3 border border-gray-300 rounded" placeholder="Email" required>
                   </div>
 
                   <div class="mb-4">
-                    <input type="password" name="password1" id="password1" class="form-input w-full p-3 border border-gray-300 rounded" placeholder="Password" required>
-                  </div>
-                  <div class="mb-4">
-                    <input type="password" name="password2" id="password2" class="form-input w-full p-3 border border-gray-300 rounded" placeholder="Confirm Password" required>
+                    <input type="password" name="password" id="password" class="form-input w-full p-3 border border-gray-300 rounded" placeholder="Password" required>
                   </div>
 
-                  <div class="mb-4">
-                    <input type="text" name="phn_no" id="phn_no" class="form-input w-full p-3 border border-gray-300 rounded" placeholder="Phone No" required>
-                  </div>
-
-                  
-
-                  <div class="mb-4 flex items-center">
-                    <input type="checkbox" id="terms" class="form-checkbox h-4 w-4 text-blue-600" checked>
-                    <label for="terms" class="ml-2 text-gray-600">I agree with the terms and conditions of BookMyVenue</label>
-                  </div>
-
-                  <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Register</button>
+                  <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Login</button>
 
                   <div class="flex justify-center items-center mt-4">
                     <a href="#!" class="text-blue-500 hover:text-blue-700 mx-2"><i class="fab fa-facebook-f"></i></a>
