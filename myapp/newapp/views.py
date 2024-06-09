@@ -30,10 +30,10 @@ def SaveEnquiry(request):
     
 def LoginPage(request):
     if request.method == "POST":
-        email = request.POST.get('cust_email')
-        password = request.POST.get('password')
-        print(email,password)
-        user = authenticate(request, username=email, password=password)
+        username = request.POST.get('username')
+        pass1 = request.POST.get('password')
+        print(username,pass1)
+        user = authenticate(request, username=username, password=pass1)
 
         print(user)
         if user is not None:
