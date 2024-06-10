@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
 from .models import hall,garden,pool,community_hall
+from .form import BookingForm
 
 # Create your views here.
 @login_required(login_url='login')
@@ -161,3 +162,16 @@ def listing(request):
             community_hall_list = community_hall_list.filter(type=selected_type)
 
     return render(request, 'home.html', {'hall_list': hall_list, 'garden_list': garden_list, 'pool_list': pool_list, 'community_hall_list': community_hall_list})
+
+
+# BOOKING VENUE
+@login_required
+def book_venue(request):
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Replace 'home' with the name of your home view
+    else:
+        form = BookingForm()
+    return render(request, 'book.html', {'form': form})

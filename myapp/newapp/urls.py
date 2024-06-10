@@ -10,6 +10,9 @@ urlpatterns = [
     path('signup/',views.SaveEnquiry,name="signup"),
     path('home/',views.homea,name="homea"),
     path('search/', views.listing, name='search'),
+    path('book/', views.book_venue, name='book_venue'),
+    path('login/',views.LoginPage, name = 'login'),
+    path('logout/',views.LogoutPage,name = "logout")
 
     
 ]

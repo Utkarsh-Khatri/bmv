@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  {% load static %}
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +12,6 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <link rel="stylesheet" href="{% static 'book.css' %}">
   <title>Booking Information</title>
 </head>
 
@@ -21,36 +19,10 @@
   <div class="container mx-auto p-6 bg-white shadow-md rounded">
     <h4 class="text-2xl font-bold mb-4"><i class="fa fa-file fa-lg" aria-hidden="true"></i> Booking Information </h4>
     <div class="space-y-4">
-      <form action="signup/book" class="needs-validation" novalidate method="POST">
+      <form method="POST" novalidate>
         {% csrf_token %}
-        <div class="mb-4">
-          <input type="text" class="form-control w-full border border-gray-300 p-2 rounded" id="vname" name="vname"
-            placeholder="Enter Venue name" required>
-        </div>
-        <div class="mb-4">
-          <input type="text" class="form-control w-full border border-gray-300 p-2 rounded" id="custn" name="custn"
-            placeholder="Enter your full name" required>
-        </div>
-        <div class="mb-4">
-          <input type="text" class="form-control w-full border border-gray-300 p-2 rounded" id="phn" name="phn"
-            placeholder="Phone Number" required>
-        </div>
-        <div class="mb-4">
-          <input type="email" class="form-control w-full border border-gray-300 p-2 rounded" id="exampleInputEmail1"
-            name="email" placeholder="Enter Email-id" required>
-        </div>
-        <div class="mb-4">
-          <textarea class="form-control w-full border border-gray-300 p-2 rounded" id="exampleFormControlTextarea1"
-            name="addr" rows="3" placeholder="Enter Full Address"></textarea>
-        </div>
-        <div class="mb-4">
-          <label for="Test_DatetimeLocal" class="form-label block text-gray-700 mb-2">Select date and time</label>
-          <input type="date" id="Test_DatetimeLocal" name="date" class="form-control w-full border border-gray-300 p-2 rounded"
-            placeholder="Select date and time">
-        </div>
-
+        {{ form.as_p }}
         <hr class="my-4">
-
         <button type="submit" class="btn btn-outline-success bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Submit</button>
       </form>
     </div>
