@@ -9,6 +9,7 @@ urlpatterns = [
     path('homea/',views.home,name="home"),
     path('signup/',views.SaveEnquiry,name="signup"),
     path('home/',views.homea,name="homea"),
+    path('search/', views.listing, name='search'),
     
 ]
 if settings.DEBUG:
