@@ -7,9 +7,12 @@ from django.conf.urls.static import static
 urlpatterns = [
     
     path('homea/',views.home,name="home"),
+    path('index/',views.index,name="index"),
     path('signup/',views.SaveEnquiry,name="signup"),
     path('home/',views.homea,name="homea"),
     path('search/', views.listing, name='search'),
+    path('login/', views.LoginPage, name='login'),
+    path('logout/', views.LogoutPage, name='logout'),
 
     
 ]

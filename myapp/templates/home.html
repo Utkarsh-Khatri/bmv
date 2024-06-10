@@ -1018,7 +1018,7 @@
     {% endfor %}
 
 
-    {% for y in garden_list %}
+    {% for y in gardens %}
     {% load static %}
     <div class="container mt-5">
         <div class="card">
@@ -1115,7 +1115,7 @@
     {% endfor %}
 
 
-    {% for z in pool_list %}
+    {% for z in pools %}
     {% load static %}
     <div class="container mt-5">
         <div class="card">
@@ -1213,7 +1213,7 @@
     {% endfor %}
 
 
-    {% for a in community_hall_list %}
+    {% for a in community_halls %}
     {% load static %}
     <div class="container mt-5">
         <div class="card">
@@ -1993,16 +1993,16 @@
                         <div class=" col-sm-12 golu ">
                             <select class="form-select" name="venue" aria-label="Default select example">
                                 <option selected>Select Venue</option>
-                                {% for x in hall_list %}
+                                {% for x in products %}
                                 <option value="{{x.hall_name}}">{{x.hall_name}}</option>
                                 {% endfor %}
-                                {% for y in garden_list %}
+                                {% for y in gardens %}
                                 <option value="{{y.garden_name}}">{{y.garden_name}}</option>
                                 {% endfor %}
-                                {% for z in pool_list %}
+                                {% for z in pools %}
                                 <option value="{{z.pool_name}}">{{z.pool_name}}</option>
                                 {% endfor %}
-                                {% for a in community_hall_list %}
+                                {% for a in community_halls %}
                                 <option value="{{a.community_hall_name}}">{{a.community_hall_name}}</option>
                                 {% endfor %}
                             </select>

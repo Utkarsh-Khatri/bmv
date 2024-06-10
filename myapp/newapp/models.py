@@ -4,7 +4,7 @@ from django.db import models
 
 class hall(models.Model):
     hall_id= models.AutoField(primary_key=True)
-    venue_type = models.CharField(max_length=100)
+    venue_type = models.CharField(max_length=100,default='Hall')
     hall_name= models.CharField(max_length=500)
     city= models.CharField(max_length=500)
     locality=models.CharField(max_length=500)
@@ -19,7 +19,7 @@ class hall(models.Model):
 
 class garden(models.Model):
     garden_id= models.AutoField(primary_key=True)
-    venue_type = models.CharField(max_length=100)
+    venue_type = models.CharField(max_length=100,default='Garden')
     garden_name= models.CharField(max_length=1500)
     city= models.CharField(max_length=500)
     locality=models.CharField(max_length=500)
@@ -34,7 +34,7 @@ class garden(models.Model):
 
 class community_hall(models.Model):
     community_hall_id= models.AutoField(primary_key=True)
-    venue_type = models.CharField(max_length=100)
+    venue_type = models.CharField(max_length=100,default='Community Hall')
     community_hall_name= models.CharField(max_length=500)
     city= models.CharField(max_length=500)
     locality=models.CharField(max_length=500)
@@ -49,7 +49,7 @@ class community_hall(models.Model):
 
 class pool(models.Model):
     pool_id= models.AutoField(primary_key=True)
-    venue_type = models.CharField(max_length=100)
+    venue_type = models.CharField(max_length=100,default='Pool')
     pool_name= models.CharField(max_length=500)
     city= models.CharField(max_length=500)
     locality=models.CharField(max_length=500)

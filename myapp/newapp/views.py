@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import hall,garden,pool,community_hall
 
+
 # Create your views here.
 @login_required(login_url='login')
 def home(request):
@@ -38,13 +39,21 @@ def LoginPage(request):
         print(user)
         if user is not None:
             login(request,user)
-            return redirect ('home')
+            return redirect ('homea')
         else:
             return HttpResponse('Username or Password is incorrect')
     return render(request, 'login.html',)
 def homea(request):
     products = hall.objects.all()
-    context = {'products':products}
+    community_halls = community_hall.objects.all()
+    pools = pool.objects.all()
+    gardens = garden.objects.all()
+    context = {
+        'products': products,
+        'community_halls': community_halls,
+        'pools': pools,
+        'gardens': gardens,
+    }
 
     return render(request, 'home.html',context)
 
@@ -68,96 +77,211 @@ def listing(request):
     community_hall_list = community_hall.objects.all()
 
     if request.method == 'POST':
-        selected_cap = request.POST.get('cap')
         selected_place = request.POST.get('place')
-        selected_type = request.POST.get('venue')
-
-        # Filter halls based on selected capacity, type, and city
+        selected_type = request.POST.get('type')
+        selected_cap = request.POST.get('cap')
         if selected_cap == '1':
-            hall_list = hall.objects.filter(capacity__lt=1000)
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE capacity<1000')
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE capacity<1000')
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE capacity<1000')
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE capacity<1000')
         elif selected_cap == '2':
-            hall_list = hall.objects.filter(capacity__range=(1000, 2000))
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE capacity BETWEEN 1000 AND 2000')
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE capacity BETWEEN 1000 AND 2000')
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE capacity BETWEEN 1000 AND 2000')
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE capacity BETWEEN 1000 AND 2000')
         elif selected_cap == '3':
-            hall_list = hall.objects.filter(capacity__range=(2000, 3000))
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE capacity BETWEEN 2000 AND 3000')
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE capacity BETWEEN 2000 AND 3000')
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE capacity BETWEEN 2000 AND 3000')
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE capacity BETWEEN 2000 AND 3000')
         elif selected_cap == '4':
-            hall_list = hall.objects.filter(capacity__range=(3000, 4000))
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE capacity BETWEEN 3000 AND 4000')
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE capacity BETWEEN 3000 AND 4000')
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE capacity BETWEEN 3000 AND 4000')
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE capacity BETWEEN 3000 AND 4000')
         elif selected_cap == '5':
-            hall_list = hall.objects.filter(capacity__range=(4000, 5000))
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE capacity BETWEEN 4000 AND 5000')
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE capacity BETWEEN 4000 AND 5000')
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE capacity BETWEEN 4000 AND 5000')
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE capacity BETWEEN 4000 AND 5000')
         elif selected_cap == '6':
-            hall_list = hall.objects.filter(capacity__gt=5000)
-        else:
-            hall_list = hall.objects.all()
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE capacity>5000')
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE capacity>5000')
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE capacity>5000')
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE capacity>5000')
 
-        if selected_place:
-            hall_list = hall_list.filter(city=selected_place)
+        if selected_type == 'hall' and selected_cap == '1':
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE city=%s AND capacity<1000', [selected_place])
+            garden_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'hall' and selected_cap == '2':
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE city=%s AND capacity BETWEEN 1000 AND 2000', [selected_place])
+            garden_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'hall' and selected_cap == '3':
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE city=%s AND capacity BETWEEN 2000 AND 3000', [selected_place])
+            garden_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'hall' and selected_cap == '4':
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE city=%s AND capacity BETWEEN 3000 AND 4000', [selected_place])
+            garden_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'hall' and selected_cap == '5':
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE city=%s AND capacity BETWEEN 4000 AND 5000', [selected_place])
+            garden_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'hall' and selected_cap == '6':
+            hall_list = hall.objects.raw(
+                'SELECT * FROM hall WHERE city=%s AND capacity>5000', [selected_place])
+            garden_list = {}
+            pool_list = {}
+            community_hall_list = {}
 
-        if selected_type and selected_type != 'Select Type of Venue':
-            hall_list = hall_list.filter(type=selected_type)
+        if selected_type == 'garden' and selected_cap == '1':
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE city=%s AND capacity<1000', [selected_place])
+            hall_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'garden' and selected_cap == '2':
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE city=%s AND capacity BETWEEN 1000 AND 2000', [selected_place])
+            hall_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'garden' and selected_cap == '3':
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE city=%s AND capacity BETWEEN 2000 AND 3000', [selected_place])
+            hall_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'garden' and selected_cap == '4':
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE city=%s AND capacity BETWEEN 3000 AND 4000', [selected_place])
+            hall_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'garden' and selected_cap == '5':
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE city=%s AND capacity BETWEEN 4000 AND 5000', [selected_place])
+            hall_list = {}
+            pool_list = {}
+            community_hall_list = {}
+        elif selected_type == 'garden' and selected_cap == '6':
+            garden_list = garden.objects.raw(
+                'SELECT * FROM garden WHERE city=%s AND capacity>5000', [selected_place])
+            hall_list = {}
+            pool_list = {}
+            community_hall_list = {}
 
-        # Filter gardens based on selected capacity, type, and city
-        if selected_cap == '1':
-            garden_list = garden.objects.filter(capacity__lt=1000)
-        elif selected_cap == '2':
-            garden_list = garden.objects.filter(capacity__range=(1000, 2000))
-        elif selected_cap == '3':
-            garden_list = garden.objects.filter(capacity__range=(2000, 3000))
-        elif selected_cap == '4':
-            garden_list = garden.objects.filter(capacity__range=(3000, 4000))
-        elif selected_cap == '5':
-            garden_list = garden.objects.filter(capacity__range=(4000, 5000))
-        elif selected_cap == '6':
-            garden_list = garden.objects.filter(capacity__gt=5000)
-        else:
-            garden_list = garden.objects.all()
+        if selected_type == 'pool' and selected_cap == '1':
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE city=%s AND capacity<1000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            community_hall_list = {}
+        elif selected_type == 'pool' and selected_cap == '2':
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE city=%s AND capacity BETWEEN 1000 AND 2000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            community_hall_list = {}
+        elif selected_type == 'pool' and selected_cap == '3':
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE city=%s AND capacity BETWEEN 2000 AND 3000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            community_hall_list = {}
+        elif selected_type == 'pool' and selected_cap == '4':
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE city=%s AND capacity BETWEEN 3000 AND 4000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            community_hall_list = {}
+        elif selected_type == 'pool' and selected_cap == '5':
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE city=%s AND capacity BETWEEN 4000 AND 5000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            community_hall_list = {}
+        elif selected_type == 'pool' and selected_cap == '6':
+            pool_list = pool.objects.raw(
+                'SELECT * FROM pool WHERE city=%s AND capacity>5000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            community_hall_list = {}
 
-        if selected_place:
-            garden_list = garden_list.filter(city=selected_place)
-
-        if selected_type and selected_type != 'Select Type of Venue':
-            garden_list = garden_list.filter(type=selected_type)
-
-        # Filter pools based on selected capacity, type, and city
-        if selected_cap == '1':
-            pool_list = pool.objects.filter(capacity__lt=1000)
-        elif selected_cap == '2':
-            pool_list = pool.objects.filter(capacity__range=(1000, 2000))
-        elif selected_cap == '3':
-            pool_list = pool.objects.filter(capacity__range=(2000, 3000))
-        elif selected_cap == '4':
-            pool_list = pool.objects.filter(capacity__range=(3000, 4000))
-        elif selected_cap == '5':
-            pool_list = pool.objects.filter(capacity__range=(4000, 5000))
-        elif selected_cap == '6':
-            pool_list = pool.objects.filter(capacity__gt=5000)
-        else:
-            pool_list = pool.objects.all()
-
-        if selected_place:
-            pool_list = pool_list.filter(city=selected_place)
-
-        if selected_type and selected_type != 'Select Type of Venue':
-            pool_list = pool_list.filter(type=selected_type)
-
-        # Filter community halls based on selected capacity, type, and city
-        if selected_cap == '1':
-            community_hall_list = community_hall.objects.filter(capacity__lt=1000)
-        elif selected_cap == '2':
-            community_hall_list = community_hall.objects.filter(capacity__range=(1000, 2000))
-        elif selected_cap == '3':
-            community_hall_list = community_hall.objects.filter(capacity__range=(2000, 3000))
-        elif selected_cap == '4':
-            community_hall_list = community_hall.objects.filter(capacity__range=(3000, 4000))
-        elif selected_cap == '5':
-            community_hall_list = community_hall.objects.filter(capacity__range=(4000, 5000))
-        elif selected_cap == '6':
-            community_hall_list = community_hall.objects.filter(capacity__gt=5000)
-        else:
-            community_hall_list = community_hall.objects.all()
-
-        if selected_place:
-            community_hall_list = community_hall_list.filter(city=selected_place)
-
-        if selected_type and selected_type != 'Select Type of Venue':
-            community_hall_list = community_hall_list.filter(type=selected_type)
+        if selected_type == 'community_hall' and selected_cap == '1':
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE city=%s AND capacity<1000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            pool_list = {}
+        elif selected_type == 'community_hall' and selected_cap == '2':
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE city=%s AND capacity BETWEEN 1000 AND 2000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            pool_list = {}
+        elif selected_type == 'community_hall' and selected_cap == '3':
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE city=%s AND capacity BETWEEN 2000 AND 3000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            pool_list = {}
+        elif selected_type == 'community_hall' and selected_cap == '4':
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE city=%s AND capacity BETWEEN 3000 AND 4000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            pool_list = {}
+        elif selected_type == 'community_hall' and selected_cap == '5':
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE city=%s AND capacity BETWEEN 4000 AND 5000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            pool_list = {}
+        elif selected_type == 'community_hall' and selected_cap == '6':
+            community_hall_list = community_hall.objects.raw(
+                'SELECT * FROM community_hall WHERE city=%s AND capacity>5000', [selected_place])
+            hall_list = {}
+            garden_list = {}
+            pool_list = {}
 
     return render(request, 'home.html', {'hall_list': hall_list, 'garden_list': garden_list, 'pool_list': pool_list, 'community_hall_list': community_hall_list})
+
