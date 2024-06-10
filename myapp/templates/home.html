@@ -854,7 +854,8 @@
     <!--Search--><br>
     <br>
 
-    <form action="search" method="POST">
+    <form action="{% url 'search' %}" method="POST">
+        {% csrf_token %}
         <div class="search-btn" id="search-btn">
             <div class="search-btn-1 col-sm-3 ">
                 <select class="form-select" aria-label="Default select example" name="place">
@@ -869,7 +870,7 @@
             </div>
             <div class="search-btn-2 col-sm-3">
 
-                <select class="form-select" aria-label="Default select example" name="type">
+                <select class="form-select" aria-label="Default select example" name="venue">
                     <option selected Hidden>Select Type of Venue</option>
                     <option value="hall">Hall</option>
                     <option value="garden">Garden</option>
