@@ -15,6 +15,7 @@ urlpatterns = [
     path('login/SignUp/',views.SaveEnquiry,name='signup'),
     path('logout/', views.LogoutPage, name='logout'),
     path('book/',views.book_venue,name='book'),
+    path('booking-confirmation/<int:booking-id>',views.booking_confirmation,name='booking_confirmation'),
     path('home/list/',views.Register_Venue,name='Register_Venue')
 
     

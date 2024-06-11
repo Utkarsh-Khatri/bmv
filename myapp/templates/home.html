@@ -1291,10 +1291,12 @@
                             </div>
 
                         </div>
-                        <button type="button" name="h" value="{{a.community_hall_name}}"
+                        <form action="{%url 'book'%}" method= "GET">
+                            <button type="button" name="h" value="{{a.community_hall_name}}"
                             class="btn btn-success  Book rounded" data-bs-toggle="modal" data-bs-target="#comm"
                             onclick="select3(this.value)">
                             Book</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -2091,27 +2093,6 @@
                 </div>
 
                 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
