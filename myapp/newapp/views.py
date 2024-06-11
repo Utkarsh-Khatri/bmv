@@ -166,13 +166,13 @@ def book_venue(request):
     venue_id = request.GET.get('venue_id')
 
     if venue_type == 'hall':
-        venue = get_object_or_404(Hall, hall_id=venue_id)
+        venue = get_object_or_404(hall, hall_id=venue_id)
     elif venue_type == 'garden':
-        venue = get_object_or_404(Garden, garden_id=venue_id)
+        venue = get_object_or_404(garden, garden_id=venue_id)
     elif venue_type == 'community_hall':
-        venue = get_object_or_404(CommunityHall, community_hall_id=venue_id)
+        venue = get_object_or_404(community_hall, community_hall_id=venue_id)
     elif venue_type == 'pool':
-        venue = get_object_or_404(Pool, pool_id=venue_id)
+        venue = get_object_or_404(pool, pool_id=venue_id)
     else:
         return HttpResponse("Invalid venue type", status=400)
 
