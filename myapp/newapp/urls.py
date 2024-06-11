@@ -16,6 +16,7 @@ urlpatterns = [
     path('logout/', views.LogoutPage, name='logout'),
     path('book/',views.book_venue,name='book'),
     path('home/list/',views.Register_Venue,name='Register_Venue')
+
     
 ]
 if settings.DEBUG:
