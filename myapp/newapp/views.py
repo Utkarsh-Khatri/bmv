@@ -1,10 +1,10 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
-from .models import hall,garden,pool,community_hall
+from .models import hall,garden,pool,community_hall,Booking
 from .form import BookingForm
 # Create your views here.
 @login_required(login_url='login')
@@ -159,19 +159,41 @@ def listing(request):
 
 
 # BOOKING VENUE
-def book(request):
-    return render(request,"book.html")
+
 @login_required
 def book_venue(request):
-    
+    venue_type = request.GET.get('venue_type')
+    venue_id = request.GET.get('venue_id')
+
+    if venue_type == 'hall':
+        venue = get_object_or_404(hall, hall_id=venue_id)
+    elif venue_type == 'garden':
+        venue = get_object_or_404(garden, garden_id=venue_id)
+    elif venue_type == 'community_hall':
+        venue = get_object_or_404(community_hall, community_hall_id=venue_id)
+    elif venue_type == 'pool':
+        venue = get_object_or_404(pool, pool_id=venue_id)
+    else:
+        return HttpResponse("Invalid venue type", status=400)
+
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')  # Replace 'home' with the name of your home view
+            booking = form.save(commit=False)
+            booking.venue_type = venue_type
+            booking.venue_id = venue_id
+            booking.save()
+            return redirect('booking_confirmation', booking_id=booking.id)
+        else:
+            return render(request, 'list.html', {'venue': venue, 'form': form, 'venue_type': venue_type})
     else:
         form = BookingForm()
-    return render(request, 'book.html', {'form': form})
+        return render(request, 'list.html', {'venue': venue, 'form': form, 'venue_type': venue_type})
+
+def booking_confirmation(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+    return render(request, 'booking_confirmation.html', {'booking': booking})
+
 
 def Register_Venue(request):
     flex_radio_default = request.GET.get('flexRadioDefault')

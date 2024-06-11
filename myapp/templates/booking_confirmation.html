@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <link rel="stylesheet" href="{% static 'path/to/your/css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">Booking Confirmation</h1>
+                <p>Your booking was successful!</p>
+                <p><strong>Booked by:</strong> {{ booking.user_name }}</p>
+                <p><strong>Contact:</strong> {{ booking.user_contact }}</p>
+                <p><strong>Date:</strong> {{ booking.booking_date }}</p>
+                <p><strong>Time:</strong> {{ booking.booking_time }}</p>
+                <p><strong>Venue Type:</strong> {{ booking.venue_type }}</p>
+                <p><strong>Venue ID:</strong> {{ booking.venue_id }}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

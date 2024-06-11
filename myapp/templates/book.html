@@ -1,35 +1,126 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Venue</title>
+   <style>
+    /* styles.css */
 
-  <!-- Tailwind CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <title>Booking Information</title>
+    /* Form styles */
+    .form-group {
+        margin-bottom: 30px;
+    }
+    
+    .input-group {
+        position: relative;
+    }
+    
+    .input-group label {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: #495057;
+        transition: all 0.3s ease;
+        pointer-events: none;
+    }
+    
+    .input-group input {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 16px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    .input-group input:focus {
+        border-color: #007bff;
+    }
+    
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+        top: 8px;
+        left: 15px;
+        font-size: 12px;
+        color: #007bff;
+    }
+    
+    .button-group {
+        margin-top: 20px;
+    }
+    
+    .button-group button {
+        padding: 12px 24px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .button-group button:hover {
+        background-color: #0056b3;
+    }
+    
+   </style>
 </head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">{{ venue.hall_name|default:venue.garden_name|default:venue.community_hall_name|default:venue.pool_name }}</h1>
+                <p><strong>Location:</strong> {{ venue.locality }}, {{ venue.city }}</p>
+                <p><strong>Description:</strong> {{ venue.description }}</p>
+                <p><strong>Capacity:</strong> {{ venue.capacity }}</p>
+                <p><strong>Cost:</strong> ₹{{ venue.cost }}</p>
+                <p><strong>Contact Number:</strong> {{ venue.contact_no }}</p>
 
-<body class="bg-gray-100">
-  <div class="container mx-auto p-6 bg-white shadow-md rounded">
-    <h4 class="text-2xl font-bold mb-4"><i class="fa fa-file fa-lg" aria-hidden="true"></i> Booking Information </h4>
-    <div class="space-y-4">
-      <form method="POST" novalidate>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <hr class="my-4">
-        <button type="submit" class="btn btn-outline-success bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Submit</button>
-      </form>
+                <h2 class="mt-4">Book This Venue</h2>
+                <form method="POST" action="{% url 'list' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="venue_type" value="{{ venue_type }}">
+                  <input type="hidden" name="venue_id" value="{{ venue.hall_id|default:venue.garden_id|default:venue.community_hall_id|default:venue.pool_id }}">
+                  
+                  <div class="form-group">
+                      <div class="input-group">
+                          <input type="text" id="user_name" name="user_name" required>
+                          <label for="user_name">Your Name</label>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <div class="input-group">
+                          <input type="tel" id="user_contact" name="user_contact" pattern="[0-9]{10}" required>
+                          <label for="user_contact">Contact Number</label>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <div class="input-group">
+                          <input type="date" id="booking_date" name="booking_date" required>
+                          <label for="booking_date">Date</label>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <div class="input-group">
+                          <input type="time" id="booking_time" name="booking_time" required>
+                          <label for="booking_time">Time</label>
+                      </div>
+                  </div>
+                  
+                  <div class="button-group">
+                      <button type="submit">Book</button>
+                  </div>
+              </form>
+              
+              
+            </div>
+        </div>
     </div>
-  </div>
-
-  <!-- Optional JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
 </body>
-
 </html>
