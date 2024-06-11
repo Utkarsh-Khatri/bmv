@@ -857,52 +857,40 @@
     <form action="{% url 'search' %}" method="POST">
         {% csrf_token %}
         <div class="search-btn" id="search-btn">
-            <div class="search-btn-1 col-sm-3 ">
+            <div class="search-btn-1 col-sm-3">
                 <select class="form-select" aria-label="Default select example" name="place">
-                    <option selected Hidden>Select City</option>
-                    <option value="Dewas">Biratnagar</option>
-                    <option value="Indore">Kathmandu</option>
-                    <option value="Ujjain">Pokhara</option>
-                    <option value="Bhopal">Dharan</option>
-                    <option value="Gwalior">Bharatpur</option>
-
+                    <option value="" selected hidden>Select City</option>
+                    <option value="Biratnagar">Biratnagar</option>
+                    <option value="Kathmandu">Kathmandu</option>
+                    <option value="Pokhara">Pokhara</option>
+                    <option value="Dharan">Dharan</option>
+                    <option value="Bharatpur">Bharatpur</option>
                 </select>
             </div>
             <div class="search-btn-2 col-sm-3">
-
                 <select class="form-select" aria-label="Default select example" name="venue">
-                    <option selected Hidden>Select Type of Venue</option>
+                    <option value="" selected hidden>Select Type of Venue</option>
                     <option value="hall">Hall</option>
                     <option value="garden">Garden</option>
                     <option value="pool">Pool</option>
                     <option value="community_hall">Community Hall</option>
-
-
                 </select>
             </div>
-
-
-
-
-            <div class=" search-btn-3 col-sm-3">
+            <div class="search-btn-3 col-sm-3">
                 <select class="form-select" aria-label="Default select example" name="cap">
-                    <option selected Hidden>Capcity</option>
+                    <option value="" selected hidden>Capacity</option>
                     <option value="1">below 1000</option>
                     <option value="2">1000-2000</option>
-                    <option value="3">2000-3000 </option>
+                    <option value="3">2000-3000</option>
                     <option value="4">3000-4000</option>
                     <option value="5">4000-5000</option>
                     <option value="6">Above 5000</option>
                 </select>
-
             </div>
-            <div class=" search-btn-3 col-sm-3">
-                <button type="submit" class="btn btn-primary  rounded-pill"><i
-                        class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary">Search</button>
             </div>
-
         </div>
-
     </form>
 
 
