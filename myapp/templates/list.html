@@ -1,163 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  {% csrf_token %}
-  {% load static %}
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <!-- <link rel="stylesheet" href="{% static 'list.css' %}"> -->
-
-  <style>
-    .container {
-      margin-top: 1%;
-      margin-left: 35%;
-      max-width: 600px;
-      max-height: 48%;
-      background-color: rgba(38, 37, 39, 0.062);
-      padding: 30px;
-      border: 1px solid;
-      border-radius: 50px;
-    }
-
-    .div1 {
-      background-color: rgb(224, 230, 230);
-      max-width: 550px;
-    }
-
-    .div2 {
-      background-color: rgb(224, 230, 230);
-      max-width: 550px;
-    }
-
-    #hr1 {
-      color: black;
-      width: 100%;
-      margin-top: 30px;
-      padding-top: 3px;
-    }
-
-    .col-sm-12 {
-      padding: 10px;
-    }
-
-    .subtn {
-      margin-top: 20px;
-      margin-left: 230px;
-    }
-
-    .fa {
-      border: 1px solid black;
-      border-radius: 30px;
-      padding: 10px;
-    }
-  </style>
-  <title>Booking Page</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Page</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body>
-  <div class="container">
-    <h4><i class="fa fa-file  fa-lg" aria-hidden="true"></i> ADD VENUE INFORMATION</h4>
-    <div class="div1">
-      <form action="signup/signupb" class="needs-validation" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="col-sm-12">
-          <input type="text" class="form-control" id="vname" name="vname" aria-describedby="emailHelp"
-            placeholder="Venue Name" required>
+<body class="bg-gray-100">
+    <div class="container mx-auto py-10">
+        <h4 class="text-2xl font-bold mb-6"><i class="fa fa-file fa-lg mr-2" aria-hidden="true"></i> ADD VENUE INFORMATION</h4>
+        <div class="bg-white shadow-md rounded-lg p-8">
+            <form action="signup/signupb" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="vname" class="block text-gray-700 font-semibold mb-2">Venue Name</label>
+                        <input type="text" id="vname" name="vname" class="form-input border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                    </div>
+                    <div>
+                        <label for="lname" class="block text-gray-700 font-semibold mb-2">Locality</label>
+                        <input type="text" id="lname" name="lname" class="form-input border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                    </div>
+                    <div>
+                        <label for="city" class="block text-gray-700 font-semibold mb-2">City</label>
+                        <select id="city" name="city" class="form-select border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                            <option value="" disabled selected>Select Your City</option>
+                            <option value="Indore">Indore</option>
+                            <option value="Ujjain">Ujjain</option>
+                            <option value="Dewas">Dewas</option>
+                            <option value="Bhopal">Bhopal</option>
+                            <option value="Gwalior">Gwalior</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="desc" class="block text-gray-700 font-semibold mb-2">Venue Details</label>
+                        <textarea id="desc" name="desc" rows="3" class="form-textarea border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400"></textarea>
+                    </div>
+                    <div>
+                        <label for="type" class="block text-gray-700 font-semibold mb-2">Venue Type</label>
+                        <select id="type" name="type" class="form-select border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                            <option value="" disabled selected>Select Venue Type</option>
+                            <option value="1">Hall</option>
+                            <option value="2">Garden</option>
+                            <option value="3">Pool Party</option>
+                            <option value="4">Community Hall</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="cap" class="block text-gray-700 font-semibold mb-2">Venue Capacity</label>
+                        <input type="text" id="cap" name="cap" class="form-input border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                    </div>
+                    <div>
+                        <label for="url" class="block text-gray-700 font-semibold mb-2">Venue Website URL</label>
+                        <div class="flex">
+                            <input type="text" id="url" name="url" class="form-input border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                            <span class="inline-flex items-center px-4 bg-gray-100 text-gray-500">.com</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="photo" class="block text-gray-700 font-semibold mb-2">Upload Your Image</label>
+                        <input type="file" id="photo" name="photo" class="form-input border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                    </div>
+                    <div>
+                        <label for="cst" class="block text-gray-700 font-semibold mb-2">Cost of Venue</label>
+                        <input type="text" id="cst" name="cst" class="form-input border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                    </div>
+                </div>
+                <hr class="my-8 border-gray-300">
+                <h4 class="text-2xl font-bold mb-6"><i class="fa fa-phone fa-lg mr-2" aria-hidden="true"></i> ADD CONTACT INFORMATION</h4>
+                <div class="bg-white shadow-md rounded-lg p-8">
+                    <div>
+                        <label for="mname" class="block text-gray-700 font-semibold mb-2">Manager Name</label>
+                        <input type="text" id="mname" name="mname" class="form-input border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                    </div>
+                    <div>
+                        <label for="con_no" class="block text-gray-700 font-semibold mb-2">Owner/Authorized Person's Mobile No.</label>
+                        <input type="text" id="con_no" name="con_no" class="form-input border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                    </div>
+                    <div>
+                        <label for="email2" class="block text-gray-700 font-semibold mb-2">Official Email-id</label>
+                        <input type="email" id="email2" name="email2" class="form-input border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-blue-400">
+                    </div>
+                    <button type="submit" class="btn px-8 py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 m-2">Submit</button>
+                </div>
+            </form>
         </div>
-
-        <div class="col-sm-12">
-          <input type="text" class="form-control" id="lname" name="lname" aria-describedby="emailHelp"
-            placeholder="Locality" required>
-        </div>
-        <div class="col-sm-12">
-          <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="city">
-            <option selected>Select Your City</option>
-            <option value="Kathmandu" {% if data.selected_lang=='Kathmandu' %}selected{% endif %}>Kathmandu</option>
-            <option value="" {% if data.selected_lang=='Ujjain' %}selected{% endif %}>Ujjain</option>
-            <option value="Dewas" {% if data.selected_lang=='Dewas' %}selected{% endif %}>Dewas</option>
-            <option value="Bhopal" {% if data.selected_lang=='Bhopal' %}selected{% endif %}>Bhopal</option>
-            <option value="Gwalior" {% if data.selected_lang=='Gwalior' %}selected{% endif %}>Gwalior</option>
-          </select>
-        </div>
-
-
-        <div class="col-sm-12">
-          <textarea class="form-control" id="exampleFormControlTextarea1" name="desc" rows="3"
-            placeholder="Venue Details"></textarea>
-        </div>
-        <div class="col-sm-12">
-          <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="type">
-            <option selected>Venue Type</option>
-            <option value="1" {% if data.selected_lang=='1' %}selected{% endif %}> Hall</option>
-            <option value="2" {% if data.selected_lang=='2' %}selected{% endif %}>Garden</option>
-            <option value="3" {% if data.selected_lang=='3' %}selected{% endif %}>Pool Party</option>
-            <option value="4" {% if data.selected_lang=='4' %}selected{% endif %}>Commity Hall</option>
-          </select>
-        </div>
-        <div class="col-sm-12">
-          <input type="text" class="form-control" id="lname" aria-describedby="emailHelp" name="cap"
-            placeholder="Venue Capacity" required>
-        </div>
-
-        <div class="input-group col-sm-12">
-          <input type="text" class="form-control" placeholder="Venue Website url" name="url"
-            aria-label="Recipient's username" aria-describedby="basic-addon2">
-          <span class="input-group-text" id="basic-addon2">.com</span>
-        </div>
-        <div class="input-group col-sm-12">
-          <input type="file" class="form-control" id="inputGroupFile02" name="photo" placeholder="Upload Your Image"
-            accept="image/*">
-        </div>
-        <div class="col-sm-12">
-          <input type="text" class="form-control" id="cost" aria-describedby="emailHelp" name="cst"
-            placeholder="Cost of Venue" required>
-        </div>
-        <hr id="hr1">
-
-        <h4><i class="fa fa-phone fa-lg" aria-hidden="true"></i> ADD CONTACT INFORMATION</h4>
-        <div class="div2 row">
-          <div class="col-sm-12">
-            <input type="text" class="form-control" id="mname" aria-describedby="emailHelp" name="mname"
-              placeholder="Manager Name" required>
-          </div>
-
-          <div class="col-sm-12">
-            <input type="text" class="form-control" id="phone" aria-describedby="emailHelp" name="con_no"
-              placeholder="Owner/Authorized Person's Mobile No." required>
-          </div>
-
-
-          <div class="col-sm-9">
-            <input type="email" class="form-control" id="exampleInputEmail1" name="email2" aria-describedby="emailHelp"
-              placeholder="Official Email-id" required>
-          </div>
-          <button type="submit" class="btn subtn btn-outline-success">Submit</button>
-      </form>
     </div>
-  </div>
-  <!-- Optional JavaScript; choose one of the two! -->
-
-  <!-- Option 1: Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-
-  <!-- Option 2: Separate Popper and Bootstrap JS -->
-  <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
 </body>
 
 </html>

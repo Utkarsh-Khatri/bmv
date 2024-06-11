@@ -288,6 +288,7 @@ def listing(request):
 # BOOKING VENUE
 @login_required
 def book_venue(request):
+    
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
@@ -296,3 +297,7 @@ def book_venue(request):
     else:
         form = BookingForm()
     return render(request, 'book.html', {'form': form})
+
+def Register_Venue(request):
+    flex_radio_default = request.GET.get('flexRadioDefault')
+    return render(request,"list.html")

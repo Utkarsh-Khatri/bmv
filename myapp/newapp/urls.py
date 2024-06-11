@@ -12,9 +12,10 @@ urlpatterns = [
     path('home/',views.homea,name="homea"),
     path('search/', views.listing, name='search'),
     path('login/', views.LoginPage, name='login'),
+    path('login/SignUp/',views.SaveEnquiry,name='signup'),
     path('logout/', views.LogoutPage, name='logout'),
-    path('book/',views.book_venue,name='book')
-
+    path('book/',views.book_venue,name='book'),
+    path('home/list/',views.Register_Venue,name='Register_Venue')
     
 ]
 if settings.DEBUG:
