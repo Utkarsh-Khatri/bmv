@@ -133,7 +133,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # settings.py
-
+APPEND_SLASH = False
 # Static files (CSS, JavaScript, Images)
 
 

@@ -14,9 +14,11 @@ urlpatterns = [
     path('login/', views.LoginPage, name='login'),
     path('login/SignUp/',views.SaveEnquiry,name='signup'),
     path('logout/', views.LogoutPage, name='logout'),
-    path('book/',views.book_venue,name='book'),
+    path('home/signup/book/',views.book_venue,name='book'),
     path('booking-confirmation/<int:booking_id>',views.booking_confirmation,name='booking_confirmation'),
-    path('home/list/',views.Register_Venue,name='Register_Venue')
+    path('home/list/',views.Register_Venue,name='Register_Venue'),
+    path('home/list/register',views.Register_Confirmation,name='Register_confirmation'),
+    path('hall/<int:venue_id>/', views.book_venue, name='hall_detail'),
 
     
 ]

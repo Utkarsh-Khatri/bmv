@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
 from .models import hall,garden,pool,community_hall,Booking
-from .form import BookingForm
+from .form import VenueBookingForm
 # Create your views here.
 @login_required(login_url='login')
 def home(request):
@@ -162,8 +162,10 @@ def listing(request):
 
 @login_required
 def book_venue(request):
-    venue_type = request.GET.get('venue_type')
-    venue_id = request.GET.get('venue_id')
+    venue_type = request.POST.get('id')
+    venue_id = request.POST.get('vn')
+    date_start = request.POST.get('dates')
+    print(venue_id,venue_type)
 
     if venue_type == 'hall':
         venue = get_object_or_404(hall, hall_id=venue_id)
@@ -177,7 +179,7 @@ def book_venue(request):
         return HttpResponse("Invalid venue type", status=400)
 
     if request.method == 'POST':
-        form = BookingForm(request.POST)
+        form = VenueBookingForm(request.POST)
         if form.is_valid():
             booking = form.save(commit=False)
             booking.venue_type = venue_type
@@ -187,7 +189,7 @@ def book_venue(request):
         else:
             return render(request, 'list.html', {'venue': venue, 'form': form, 'venue_type': venue_type})
     else:
-        form = BookingForm()
+        form = VenueBookingForm()
         return render(request, 'list.html', {'venue': venue, 'form': form, 'venue_type': venue_type})
 
 def booking_confirmation(request, booking_id):
@@ -196,5 +198,22 @@ def booking_confirmation(request, booking_id):
 
 
 def Register_Venue(request):
-    flex_radio_default = request.GET.get('flexRadioDefault')
+        
     return render(request,"list.html")
+
+def Register_Confirmation(request):
+    if request.method == 'POST':
+        venue_name = request.POST.get('vname')
+        locality = request.POST.get('lname')
+        city = request.POST.get('city')
+        venue_details = request.POST.get('desc')
+        venue_type = request.POST.get('type')
+        venue_capacity = request.POST.get('cap')
+        venue_website = request.POST.get('url') +'.com'
+        venue_image = request.POST.get('photo')
+        cost = request.POST.get('cst')
+        manager_name = request.POST.get('mname')
+        owner_phone = request.POST.get('con_no')
+        official_email = request.POST.get('email2')
+        print(venue_name,locality,city,venue_details,venue_type,venue_capacity,venue_website,venue_image,cost,manager_name,owner_phone,official_email)
+    return HttpResponse('Venue Registered')
