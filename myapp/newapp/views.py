@@ -85,12 +85,12 @@ def listing(request):
         print("Selected Capacity:", selected_cap)
 
         capacity_filters = {
-            '1': (0, 999),
-            '2': (1000, 2000),
-            '3': (2001, 3000),
-            '4': (3001, 4000),
-            '5': (4001, 5000),
-            '6': (5001, float('inf'))
+            '1': (0, 99),
+            '2': (100, 200),
+            '3': (201, 300),
+            '4': (301, 400),
+            '5': (401, 500),
+            '6': (501, float('inf'))
         }
 
         if selected_cap in capacity_filters:
