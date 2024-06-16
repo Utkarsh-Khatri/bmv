@@ -65,12 +65,15 @@ class pool(models.Model):
 
 # for booking halls 
 class Booking(models.Model):
-    venue_type = models.CharField(max_length=100)
-    venue_id = models.PositiveIntegerField()
-    user_name = models.CharField(max_length=255)
-    user_contact = models.CharField(max_length=15)
-    booking_date = models.DateField()
-    booking_time = models.TimeField()
+    venue_name = models.CharField(max_length=255)
+    venue_type = models.CharField(max_length=255)
+    date_start = models.DateTimeField()
+    date_end = models.DateTimeField()
+    requirements = models.TextField(blank=True, null=True)
+    customer_name = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=15)
+    email = models.EmailField()
+    address = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"Booking for {self.venue_type} ID {self.venue_id} by {self.user_name}"
+        return f"{self.venue_name} booking for {self.customer_name}"
