@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import hall,garden,pool,community_hall,Booking
 from .form import VenueBookingForm
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 @login_required(login_url='login')
 def home(request):
@@ -209,11 +210,79 @@ def Register_Confirmation(request):
         venue_details = request.POST.get('desc')
         venue_type = request.POST.get('type')
         venue_capacity = request.POST.get('cap')
-        venue_website = request.POST.get('url') +'.com'
-        venue_image = request.POST.get('photo')
+        venue_website = request.POST.get('url') + '.com'
         cost = request.POST.get('cst')
         manager_name = request.POST.get('mname')
         owner_phone = request.POST.get('con_no')
         official_email = request.POST.get('email2')
-        print(venue_name,locality,city,venue_details,venue_type,venue_capacity,venue_website,venue_image,cost,manager_name,owner_phone,official_email)
-    return HttpResponse('Venue Registered')
+
+        # Handle file upload
+        if request.FILES.get('photo'):
+            venue_image = request.FILES['photo']
+            fs = FileSystemStorage()
+            filename = fs.save(venue_image.name, venue_image)
+            uploaded_file_url = fs.url(filename)
+        else:
+            uploaded_file_url = None
+
+        # Save data to the appropriate model
+        if venue_type == '1':  # Hall
+            hall.objects.create(
+                hall_name=venue_name,
+                city=city,
+                locality=locality,
+                description=venue_details,
+                contact_no=owner_phone,
+                capacity=venue_capacity,
+                url=venue_website,
+                manager_name=manager_name,
+                hall_email_id=official_email,
+                cost=cost,
+                img=uploaded_file_url
+            )
+        elif venue_type == '2':  # Garden
+            garden.objects.create(
+                garden_name=venue_name,
+                city=city,
+                locality=locality,
+                description=venue_details,
+                contact_no=owner_phone,
+                capacity=venue_capacity,
+                url=venue_website,
+                manager_name=manager_name,
+                garden_email_id=official_email,
+                cost=cost,
+                img=uploaded_file_url
+            )
+        elif venue_type == '3':  # Pool
+            pool.objects.create(
+                pool_name=venue_name,
+                city=city,
+                locality=locality,
+                description=venue_details,
+                contact_no=owner_phone,
+                capacity=venue_capacity,
+                url=venue_website,
+                manager_name=manager_name,
+                pool_email_id=official_email,
+                cost=cost,
+                img=uploaded_file_url
+            )
+        elif venue_type == '4':  # Community Hall
+            community_hall.objects.create(
+                community_hall_name=venue_name,
+                city=city,
+                locality=locality,
+                description=venue_details,
+                contact_no=owner_phone,
+                capacity=venue_capacity,
+                url=venue_website,
+                manager_name=manager_name,
+                community_hall_email_id=official_email,
+                cost=cost,
+                img=uploaded_file_url
+            )
+
+        return HttpResponse('Venue Registered')
+    
+    
