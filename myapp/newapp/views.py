@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import hall,garden,pool,community_hall,Booking
 from .form import VenueBookingForm
 from django.core.files.storage import FileSystemStorage
+from django.contrib import messages
 # Create your views here.
 @login_required(login_url='login')
 def home(request):
@@ -163,32 +164,32 @@ def listing(request):
 
 @login_required
 def book_venue(request):
-    venue_type = request.POST.get('id')
-    venue_id = request.POST.get('vn')
+    venue_type = request.POST.get('typ')
     date_start = request.POST.get('dates')
-    print(venue_id,venue_type)
+    venue_name = request.POST.get('vn1')
+    print(venue_type,date_start,venue_name)
 
-    if venue_type == 'hall':
-        venue = get_object_or_404(hall, hall_id=venue_id)
-    elif venue_type == 'garden':
-        venue = get_object_or_404(garden, garden_id=venue_id)
-    elif venue_type == 'community_hall':
-        venue = get_object_or_404(community_hall, community_hall_id=venue_id)
-    elif venue_type == 'pool':
-        venue = get_object_or_404(pool, pool_id=venue_id)
+    if venue_type == 'Hall':
+        venue = get_object_or_404(hall, hall_name=venue_name)
+    elif venue_type == 'Garden':
+        venue = get_object_or_404(garden, garden_name=venue_name)
+    elif venue_type == 'Community_hall':
+        venue = get_object_or_404(community_hall, community_hall_name=venue_name)
+    elif venue_type == 'Pool':
+        venue = get_object_or_404(pool, pool_name=venue_name)
     else:
         return HttpResponse("Invalid venue type", status=400)
+    print(f"venue_type value: '{venue}'")
 
     if request.method == 'POST':
         form = VenueBookingForm(request.POST)
         if form.is_valid():
             booking = form.save(commit=False)
             booking.venue_type = venue_type
-            booking.venue_id = venue_id
+            booking.venue_name = venue_name
             booking.save()
-            return redirect('booking_confirmation', booking_id=booking.id)
-        else:
-            return render(request, 'list.html', {'venue': venue, 'form': form, 'venue_type': venue_type})
+            return redirect('booking_confirmation', booking_name=booking.name)
+        
     else:
         form = VenueBookingForm()
         return render(request, 'list.html', {'venue': venue, 'form': form, 'venue_type': venue_type})
@@ -283,6 +284,7 @@ def Register_Confirmation(request):
                 img=uploaded_file_url
             )
 
-        return HttpResponse('Venue Registered')
+        messages.success(request,'Venue Registered Successfully')
+        return render(request,'home.html')
     
     

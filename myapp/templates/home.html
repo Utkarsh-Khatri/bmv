@@ -636,7 +636,16 @@
 </head>
 
 <body>
-    <!--Navbar-->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <script>
+        alert('Venue Registered Successfully');
+    </script>
+{% endif %}
     <header>
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark  fixed-top">
@@ -1772,14 +1781,14 @@
 
 
 
-                            <form action="signup/book" method="POST" class="needs-validation" novalidate>
+                            <form action="booking_confirmation" method="POST" class="needs-validation" novalidate>
                                 {% csrf_token %}
-
+                                
                                 <div class=" col-sm-12 golu  ">
                                     <p id="nameTarget1" name="vn"></p>
-                                    <input type="hidden" id="nameTargetj" name="vn">
+                                    <input type="hidden" id="nameTargetj" name="vn1">
                                 </div>
-
+                        
                                 <div class=" col-sm-12 golu">
                                     <p name="typ" value="Garden">Garden</p>
                                     <input type="hidden" name="typ" value="Garden">
