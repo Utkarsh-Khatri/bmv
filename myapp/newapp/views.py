@@ -165,35 +165,63 @@ def listing(request):
 
 @login_required
 def book_venue(request):
-    venue_type = request.POST.get('typ')
-    date_start = request.POST.get('dates')
-    venue_name = request.POST.get('vn1')
-    print(venue_type,date_start,venue_name)
-
-    if venue_type == 'Hall':
-        venue = get_object_or_404(hall, hall_name=venue_name)
-    elif venue_type == 'Garden':
-        venue = get_object_or_404(garden, garden_name=venue_name)
-    elif venue_type == 'Community_hall':
-        venue = get_object_or_404(community_hall, community_hall_name=venue_name)
-    elif venue_type == 'Pool':
-        venue = get_object_or_404(pool, pool_name=venue_name)
-    else:
-        return HttpResponse("Invalid venue type", status=400)
-    print(f"venue_type value: '{venue}'")
-
     if request.method == 'POST':
-        form = VenueBookingForm(request.POST)
-        if form.is_valid():
-            booking = form.save(commit=False)
-            booking.venue_type = venue_type
-            booking.venue_name = venue_name
-            booking.save()
-            return redirect('booking_confirmation', booking_name=booking.name)
-        
+        venue_type = request.POST.get('typ')
+        date_start = request.POST.get('dates')
+        date_end = request.POST.get('datef')  # Assuming you have a date_end field in your form
+        venue_name = request.POST.get('vn1')
+        customer_name = request.POST.get('custn')
+        phone_number = request.POST.get('phn')
+        email = request.POST.get('email')
+        address = request.POST.get('addr')
+
+        # Validate required fields
+        if not (venue_type and date_start and date_end and venue_name and customer_name and phone_number and email and address):
+            return HttpResponse("Missing required data", status=400)
+
+        # Print or log the received data for debugging
+        print(f"Venue details: {venue_type}, {date_start} - {date_end}, {venue_name}")
+        print(f"Customer details: {customer_name}, {phone_number}, {email}, {address}")
+
+        try:
+            # Fetch the venue object based on venue_type and venue_name
+            if venue_type == 'Hall':
+                venue = get_object_or_404(hall, hall_name=venue_name)
+            elif venue_type == 'Garden':
+                venue = get_object_or_404(garden, garden_name=venue_name)
+            elif venue_type == 'Community_hall':
+                venue = get_object_or_404(community_hall, community_hall_name=venue_name)
+            elif venue_type == 'Pool':
+                venue = get_object_or_404(pool, pool_name=venue_name)
+            else:
+                return HttpResponse("Invalid venue type", status=400)
+
+            # Assuming VenueBookingForm handles Booking model and related fields
+            form = VenueBookingForm({
+                'venue_name': venue_name,
+                'venue_type': venue_type,
+                'date_start': date_start,
+                'date_end': date_end,
+                'customer_name': customer_name,
+                'phone_number': phone_number,
+                'email': email,
+                'address': address,
+            })
+
+            if form.is_valid():
+                booking = form.save()
+                return redirect('booking_confirmation', booking_id=booking.id)
+            else:
+                print(form.errors)
+                return HttpResponse("Form data is not valid", status=400)
+
+        except Exception as e:
+            return HttpResponse(str(e), status=400)
+
     else:
-        form = VenueBookingForm()
-        return render(request, 'list.html', {'venue': venue, 'form': form, 'venue_type': venue_type})
+        return HttpResponse("Method not allowed", status=405)
+# newapp/views.py
+
 
 def booking_confirmation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
