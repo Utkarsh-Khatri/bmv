@@ -42,7 +42,8 @@ def LoginPage(request):
             login(request,user)
             return redirect ('homea')
         else:
-            return HttpResponse('Username or Password is incorrect')
+            messages.success(request,'Password or username doesnot match')
+            return render(request,'login.html')
     return render(request, 'login.html',)
 def homea(request):
     products = hall.objects.all()

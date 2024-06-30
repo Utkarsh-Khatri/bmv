@@ -24,6 +24,16 @@
 </head>
 
 <body class="bg-gradient-to-r from-blue-500 to-indigo-500">
+  {% if messages %}
+    {% comment %} <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul> {% endcomment %}
+    <script>
+        alert('Password or username incorrect');
+    </script>
+{% endif %}
   <form method="POST">
     {% csrf_token %}
     <section class="h-screen flex justify-center items-center">

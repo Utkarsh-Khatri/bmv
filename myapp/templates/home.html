@@ -637,13 +637,13 @@
 
 <body>
     {% if messages %}
-    <ul class="messages">
+    {% comment %} <ul class="messages">
         {% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
         {% endfor %}
-    </ul>
+    </ul> {% endcomment %}
     <script>
-        alert('Venue Registered Successfully');
+        alert('Password or Username incorrect');
     </script>
 {% endif %}
     <header>
