@@ -316,4 +316,11 @@ def Register_Confirmation(request):
         messages.success(request,'Venue Registered Successfully')
         return render(request,'home.html')
     
+def admin_bookings(request):
+    bookings = Booking.objects.all()
+    print(bookings)
+    context = {
+        'bookings': bookings
+     }
+    return render(request,'admin.html',context)
     
