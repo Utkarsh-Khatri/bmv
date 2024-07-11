@@ -334,4 +334,13 @@ def admin_bookings(request):
         'bookings': bookings
      }
     return render(request,'admin.html',context)
+
+def delete_booking(request):
+    if request.method == 'POST':
+        booking_id = request.POST.get('id')
+        booking = get_object_or_404(Booking, id=booking_id)
+        print(booking_id,booking)
+        booking.delete()
+        return redirect('adminbookings')  # Redirect to the page displaying the bookings
+    return HttpResponse(status=405)  # Method not allowed if not POST
     

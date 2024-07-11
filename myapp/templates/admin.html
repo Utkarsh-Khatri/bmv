@@ -377,7 +377,7 @@
     {% csrf_token %}
 
     <div class="container mt-3">
-        <table class="table  table-striped border border-dark border-2 rounded-top ">
+        <table class="table table-striped border border-dark border-2 rounded-top">
             <thead>
                 <tr>
                     <th scope="col">Venue Name</th>
@@ -388,40 +388,34 @@
                     <th scope="col">Phone</th>
                     <th scope="col">Email </th>
                     <th scope="col">Address</th>
-            
-                
                 </tr>
             </thead>
             <tbody>
                 {% for b in bookings %}
-                <form action="adm" method="POST">
-                    <tr>
-                        <input type="hidden" name="type" value="hall">
-                        <input type="hidden" name="id" value="{{b.hall_id}}">
-                        <td>{{b.venue_name}}</td>
-                        <td>{{b.venue_type}}</td>
-                        <td>{{b.date_start}}</td>
-                        <td>{{b.date_end}}</td>
-                        <td>{{b.customer_name}}</td>
-                        <td>{{b.phone_number}}</td>
-                        <td>{{b.email}}</td>
-                        <td>{{b.address}}</td>
-                    
-
+                <tr>
+                    <form action="{% url 'delete_booking' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ b.id }}">
+                        <td>{{ b.venue_name }}</td>
+                        <td>{{ b.venue_type }}</td>
+                        <td>{{ b.date_start }}</td>
+                        <td>{{ b.date_end }}</td>
+                        <td>{{ b.customer_name }}</td>
+                        <td>{{ b.phone_number }}</td>
+                        <td>{{ b.email }}</td>
+                        <td>{{ b.address }}</td>
                         <td>
-                            <button type="submit" class="btn btn-danger rounded m-1 "><i class="fa-solid fa-trash"
-                                    name="{{b.id}}"></i></button>
-                            <!-- <button type="button" class="btn btn-success btn-secondary rounded "><i
-                                class="fa-regular fa-pen-to-square"></i></button>  -->
+                            <button type="submit" class="btn btn-danger rounded m-1">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                         </td>
-                    </tr>
-                </form>
+                    </form>
+                </tr>
                 {% endfor %}
-                
-
             </tbody>
         </table>
     </div>
+    
 
 
 
