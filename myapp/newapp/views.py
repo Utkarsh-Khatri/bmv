@@ -8,6 +8,7 @@ from .models import hall,garden,pool,community_hall,Booking
 from .form import VenueBookingForm
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
+from .utils import send_mail_to_venue_owner
 # Create your views here.
 @login_required(login_url='login')
 def home(request):
@@ -174,6 +175,7 @@ def book_venue(request):
         phone_number = request.POST.get('phn')
         email = request.POST.get('email')
         address = request.POST.get('addr')
+        
 
         # Validate required fields
         if not (venue_type and date_start and date_end and venue_name and customer_name and phone_number and email and address):
@@ -207,9 +209,18 @@ def book_venue(request):
                 'email': email,
                 'address': address,
             })
+            customer = {'venue_name': venue_name,
+                'venue_type': venue_type,
+                'date_start': date_start,
+                'date_end': date_end,
+                'customer_name': customer_name,
+                'phone_number': phone_number,
+                'email': email,
+                'address': address}
 
             if form.is_valid():
                 booking = form.save()
+                send_mail_to_venue_owner(venue=venue,customer=customer)
                 return redirect('booking_confirmation', booking_id=booking.id)
             else:
                 print(form.errors)
