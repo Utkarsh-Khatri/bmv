@@ -417,78 +417,7 @@
                     </tr>
                 </form>
                 {% endfor %}
-                {% for a in pool_list %}
-                <form action="adm" method="POST">
-                    <tr>
-                        <input type="hidden" name="type" value="pool">
-                        <input type="hidden" name="id" value="{{a.pool_id}}">
-                        <td>{{a.pool_name}}</td>
-                        <td>{{a.city}}</td>
-                        <td>{{a.locality}}</td>
-                        <td>{{a.contact_no}}</td>
-                        <td>{{a.capacity}}</td>
-                        <td>{{a.url}}</td>
-                        <td>{{a.manager_name}}</td>
-                        <td>{{a.pool_email_id}}</td>
-                        <td>{{a.cost}}</td>
-
-                        <td>
-                            <button type="submit" class="btn btn-danger rounded "><i class="fa-solid fa-trash"
-                                    name="{{b.id}}"></i></button>
-                            <!-- <button type="button" class="btn btn-success btn-secondary rounded"><i
-                                class="fa-regular fa-pen-to-square"></i></button>  -->
-                        </td>
-                    </tr>
-                </form>
-                {% endfor %}
-                {% for c in garden_list %}
-                <form action="adm" method="POST">
-                    <tr>
-                        <input type="hidden" name="type" value="garden">
-                        <input type="hidden" name="id" value="{{c.garden_id}}">
-                        <td>{{c.garden_name}}</td>
-                        <td>{{c.city}}</td>
-                        <td>{{c.locality}}</td>
-                        <td>{{c.contact_no}}</td>
-                        <td>{{c.capacity}}</td>
-                        <td>{{c.url}}</td>
-                        <td>{{c.manager_name}}</td>
-                        <td>{{c.garden_email_id}}</td>
-                        <td>{{c.cost}}</td>
-
-                        <td>
-                            <button type="submit" class="btn btn-danger rounded "><i class="fa-solid fa-trash"
-                                    name="{{b.id}}"></i></button>
-                            <!-- <button type="button" class="btn btn-success btn-secondary rounded"><i
-                                class="fa-regular fa-pen-to-square"></i></button>  -->
-                        </td>
-                    </tr>
-                </form>
-                {% endfor %}
-                {% for d in community_hall_list %}
-                <form action="adm" method="POST">
-                    <tr>
-                        <input type="hidden" name="type" value="community_hall">
-                        <input type="hidden" name="id" value="{{d.community_hall_id}}">
-                        <td>{{d.community_hall_name}}</td>
-                        <td>{{d.city}}</td>
-                        <td>{{d.locality}}</td>
-                        <td>{{d.contact_no}}</td>
-                        <td>{{d.capacity}}</td>
-                        <td>{{d.url}}</td>
-                        <td>{{d.manager_name}}</td>
-                        <td>{{d.community_hall_email_id}}</td>
-                        <td>{{d.cost}}</td>
-
-                        <td>
-                            <button type="submit" class="btn btn-danger rounded "><i class="fa-solid fa-trash"
-                                    name="{{b.id}}"></i></button>
-                            <!-- <button type="button" class="btn btn-success btn-secondary rounded"><i
-                                class="fa-regular fa-pen-to-square"></i></button>  -->
-                        </td>
-                    </tr>
-                </form>
-                {% endfor %}
+                
 
             </tbody>
         </table>
