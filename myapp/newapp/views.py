@@ -9,6 +9,9 @@ from .form import VenueBookingForm
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from .utils import send_mail_to_venue_owner
+import datetime
+from django.contrib.auth.decorators import user_passes_test
+
 # Create your views here.
 @login_required(login_url='login')
 def home(request):
@@ -175,7 +178,6 @@ def book_venue(request):
         phone_number = request.POST.get('phn')
         email = request.POST.get('email')
         address = request.POST.get('addr')
-        
 
         # Validate required fields
         if not (venue_type and date_start and date_end and venue_name and customer_name and phone_number and email and address):
@@ -198,6 +200,19 @@ def book_venue(request):
             else:
                 return HttpResponse("Invalid venue type", status=400)
 
+            # Check for existing bookings
+            date_start_obj = datetime.datetime.strptime(date_start, '%Y-%m-%d').date()
+            date_end_obj = datetime.datetime.strptime(date_end, '%Y-%m-%d').date()
+            existing_bookings = Booking.objects.filter(
+                venue_name=venue_name,
+                venue_type=venue_type,
+                date_start__lte=date_end_obj,
+                date_end__gte=date_start_obj
+            )
+
+            if existing_bookings.exists():
+                return HttpResponse("This venue is already booked for the selected dates.", status=400)
+
             # Assuming VenueBookingForm handles Booking model and related fields
             form = VenueBookingForm({
                 'venue_name': venue_name,
@@ -209,18 +224,20 @@ def book_venue(request):
                 'email': email,
                 'address': address,
             })
-            customer = {'venue_name': venue_name,
+            customer = {
+                'venue_name': venue_name,
                 'venue_type': venue_type,
                 'date_start': date_start,
                 'date_end': date_end,
                 'customer_name': customer_name,
                 'phone_number': phone_number,
                 'email': email,
-                'address': address}
+                'address': address
+            }
 
             if form.is_valid():
                 booking = form.save()
-                send_mail_to_venue_owner(venue=venue,customer=customer)
+                send_mail_to_venue_owner(venue=venue, customer=customer)
                 return redirect('booking_confirmation', booking_id=booking.id)
             else:
                 print(form.errors)
@@ -334,6 +351,22 @@ def admin_bookings(request):
         'bookings': bookings
      }
     return render(request,'admin.html',context)
+
+def admin_check(user):
+    return user.is_superuser
+
+def admin_login_redirect(request):
+    return redirect('/admin/login/?next=/adminbookings/')
+
+@user_passes_test(admin_check, login_url='/admin/login/')
+def admin_bookings(request):
+    bookings = Booking.objects.all()
+    context = {
+        'bookings': bookings
+    }
+    return render(request, 'admin.html', context)
+
+
 
 def delete_booking(request):
     if request.method == 'POST':
