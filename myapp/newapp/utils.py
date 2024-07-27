@@ -1,7 +1,6 @@
 import yagmail
 def send_mail_to_venue_owner(venue,customer):
     yag = yagmail.SMTP('utkarshkc7@gmail.com','xyjm cems wqfa apif')
-    
 
     if venue.venue_type == 'Hall':
         content = f'Your hall {venue.hall_name} is being requested to be booked by {customer['customer_name']} from {customer['date_start']} to {customer['date_end']}\n. The customer\'s email is {customer['email']} and contact number is {customer['phone_number']}.'
